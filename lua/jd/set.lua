@@ -26,3 +26,6 @@ vim.opt.updatetime = 50
 
 vim.g.mapleader = ' '
 
+-- vim.o.background = 'light'
+vim.o.background = 'dark'
+
