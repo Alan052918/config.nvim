@@ -3,6 +3,14 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packad packer.nvim]]
 
+-- auto sync packer on saving this file
+vim.cmd [[
+	augroup packer_user_config
+		autocmd!
+		autocmd BufWritePost packer.lua source <afile> | PackerSync
+	augroup end
+]]
+
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -25,7 +33,13 @@ return require('packer').startup(function(use)
     use 'nvim-treesitter/playground'
 
 	-- fast comment 
-	use 'tpope/vim-commentary'
+	-- use 'tpope/vim-commentary'
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
 
     -- undotree (file undo tree)
     use 'mbbill/undotree'
@@ -71,12 +85,19 @@ return require('packer').startup(function(use)
 	    'rose-pine/neovim',
 	    as = 'rose-pine',
 	    config = function()
-		    require("rose-pine").setup()
+		    require('rose-pine').setup()
 		    vim.cmd('colorscheme rose-pine')
 	    end
     }
 
     -- vscode color scheme
-    use 'Mofiqul/vscode.nvim'
+    use {
+		'Mofiqul/vscode.nvim'
+		as = 'vscode',
+		config = function()
+			require('vscode').setup()
+			vim.cmd('colorscheme vscode')
+		end
+	}
 end)
 
